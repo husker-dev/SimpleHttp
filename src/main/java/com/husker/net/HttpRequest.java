@@ -55,6 +55,10 @@ public class HttpRequest {
         return connection.getInputStream();
     }
 
+    public HttpURLConnection getConnection(){
+        return connection;
+    }
+
     public HttpRequest set(String key, String value) {
         parameters.put(key, value);
         return this;
@@ -96,10 +100,14 @@ public class HttpRequest {
         connection.setRequestProperty("Cookie", cookiesString.toString());
 
         // Connect
-        connection.getContent();
+        onConnect();
 
         // Rewrite cookies
         cookies = new ArrayList<>(cookieManager.getCookieStore().getCookies());
+    }
+
+    protected void onConnect() throws IOException {
+        connection.getContent();
     }
 
     protected static String getClearUrl(String url){
