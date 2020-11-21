@@ -22,8 +22,8 @@ public class Main {
                     .set("role", "al_frame")
                     .set("_origin", "https://vk.com")
                     .set("utf8", 1)
-                    .set("email", "l")
-                    .set("pass", "p")
+                    .set("email", "89114239932")
+                    .set("pass", "NiKiTa830017771")
                     .set("lg_h", lg_h)
             );
         } catch (IOException e) {

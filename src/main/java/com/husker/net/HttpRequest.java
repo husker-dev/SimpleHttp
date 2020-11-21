@@ -103,7 +103,15 @@ public class HttpRequest {
         onConnect();
 
         // Rewrite cookies
-        cookies = new ArrayList<>(cookieManager.getCookieStore().getCookies());
+        HashMap<String, HttpCookie> cookieHashMap = new HashMap<>();
+        for(HttpCookie cookie : cookies)
+            cookieHashMap.put(cookie.getName(), cookie);
+
+        for(HttpCookie loadedCookie : cookieManager.getCookieStore().getCookies()){
+            if(cookieHashMap.containsKey(loadedCookie.getName()))
+                cookies.remove(cookieHashMap.get(loadedCookie.getName()));
+            cookies.add(loadedCookie);
+        }
     }
 
     protected void onConnect() throws IOException {
