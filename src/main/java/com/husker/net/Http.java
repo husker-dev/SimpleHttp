@@ -47,7 +47,7 @@ public class Http {
         return this;
     }
 
-    public String getHeader(String name){
+    public String getHeader(String name) throws IOException {
         return request == null ? null : request.getHeader(name);
     }
 
@@ -80,7 +80,7 @@ public class Http {
         get(getHeader("location"));
     }
 
-    public void printInfo(){
+    public void printInfo() throws IOException {
         System.out.println("-------------------------------");
         System.out.println((request instanceof Get ? "GET " : "POST ") + request.getUrl());
         System.out.println("Cookies: ");

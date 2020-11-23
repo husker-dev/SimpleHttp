@@ -31,13 +31,15 @@ public class HttpRequest {
         return cookies.toArray(new HttpCookie[0]);
     }
 
-    public String getHeader(String name){
+    public String getHeader(String name) throws IOException {
+        if(!executed)
+            execute();
         return connection.getHeaderField(name);
     }
 
-    public String getHtmlContent() throws IOException, NullPointerException{
+    public String getHtmlContent() throws IOException{
         if(!executed)
-            throw new NullPointerException("Request hasn't been executed");
+            execute();
         if(htmlContent == null) {
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
             StringBuilder out = new StringBuilder();
