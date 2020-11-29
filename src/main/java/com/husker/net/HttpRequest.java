@@ -7,10 +7,14 @@ import java.util.*;
 
 public class HttpRequest {
 
+    public static HttpRequest create(String url){
+        return new HttpRequest(url);
+    }
+
     private final String url;
     private HttpURLConnection connection;
     private ArrayList<HttpCookie> cookies = new ArrayList<>();
-    private HashMap<String, String> parameters = new HashMap<>();
+    private Map<String, String> parameters = new LinkedHashMap<>();
 
     private boolean executed = false;
     private String htmlContent = null;
@@ -66,7 +70,7 @@ public class HttpRequest {
         return this;
     }
 
-    public void setParameters(HashMap<String, String> parameters){
+    public void setParameters(Map<String, String> parameters){
         this.parameters = parameters;
     }
 

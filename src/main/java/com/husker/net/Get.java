@@ -19,12 +19,20 @@ public class Get extends HttpRequest{
         }
     }
 
-    protected HttpURLConnection createClient(String url) throws IOException {
-        StringBuilder parameters = new StringBuilder();
-        for(Map.Entry<String, String> entry : getParameters().entrySet())
-            parameters.append("&").append(entry.getKey()).append("=").append(entry.getValue() == null ? "" : entry.getValue());
+    public String getUrl() {
+        String url = super.getUrl();
+        if(getParameters().size() > 0){
+            StringBuilder parameters = new StringBuilder();
+            for(Map.Entry<String, String> entry : getParameters().entrySet())
+                parameters.append("&").append(entry.getKey()).append("=").append(entry.getValue() == null ? "" : entry.getValue());
 
-        HttpURLConnection connection = super.createClient(url + parameters.toString().replaceFirst("&", "?"));
+            url += parameters.toString().replaceFirst("&", "?");
+        }
+        return url;
+    }
+
+    protected HttpURLConnection createClient(String url) throws IOException {
+        HttpURLConnection connection = super.createClient(url);
         connection.setRequestMethod("GET");
 
         return connection;

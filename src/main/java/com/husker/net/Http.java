@@ -21,7 +21,8 @@ public class Http {
         request = new Get(url);
         request.setCookies(cookies.toArray(new HttpCookie[0]));
         if(parameters != null)
-            request.setParameters(parameters);
+            parameters.forEach((key, val) -> request.set(key, val));
+
         request.execute();
         cookies = new ArrayList<>(Arrays.asList(request.getCookies()));
 
@@ -90,5 +91,7 @@ public class Http {
         System.out.println("Content: " + getHtmlContent());
     }
 
-
+    public HttpRequest getLastRequest(){
+        return request;
+    }
 }
