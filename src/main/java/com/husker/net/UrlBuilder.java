@@ -17,7 +17,7 @@ public class UrlBuilder implements CharSequence {
         if(domain.contains("?")) {
             for (String parameter : domain.split("\\?")[1].split("&")) {
                 String[] par = parameter.split("=");
-                set(par[0], par.length == 2 ? par[1] : null);
+                set(par[0], par.length == 2 ? par[1] : "");
             }
             domain = domain.split("\\?")[0];
         }
@@ -41,15 +41,12 @@ public class UrlBuilder implements CharSequence {
     public String toString(){
         try {
             StringBuilder builder = new StringBuilder();
-            builder.append(protocol).append("://").append(domain).append((!domain.contains("&") && parameters.size() > 0) ? "?" : "");
+            builder.append(protocol).append("://").append(domain);
 
-            for (Map.Entry<String, String> entry : parameters.entrySet()) {
-                if (builder.toString().charAt(builder.toString().length() - 1) != '?')
-                    builder.append("&");
-                builder.append(URLEncoder.encode(entry.getKey(), "UTF-8")).append("=").append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            }
+            for (Map.Entry<String, String> entry : parameters.entrySet())
+                builder.append("&").append(URLEncoder.encode(entry.getKey(), "UTF-8")).append("=").append(URLEncoder.encode(entry.getValue(), "UTF-8"));
 
-            return builder.toString();
+            return builder.toString().replaceFirst("&", "?");
         }catch (Exception ex){
             ex.printStackTrace();
             return "";

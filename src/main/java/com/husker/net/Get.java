@@ -14,7 +14,7 @@ public class Get extends HttpRequest{
         if(urlString.contains("?")) {
             for (String parameter : urlString.split("\\?")[1].split("&")) {
                 String[] par = parameter.split("=");
-                set(par[0], par.length == 2 ? par[1] : null);
+                set(par[0], par.length == 2 ? par[1] : "");
             }
         }
     }
@@ -24,7 +24,7 @@ public class Get extends HttpRequest{
         if(getParameters().size() > 0){
             StringBuilder parameters = new StringBuilder();
             for(Map.Entry<String, String> entry : getParameters().entrySet())
-                parameters.append("&").append(entry.getKey()).append("=").append(entry.getValue() == null ? "" : entry.getValue());
+                parameters.append("&").append(entry.getKey()).append("=").append(entry.getValue());
 
             url += parameters.toString().replaceFirst("&", "?");
         }
